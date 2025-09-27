@@ -136,7 +136,6 @@ const PathfindingVisualizer = () => {
   const runPathfinding = async () => {
     if (!startPos || !endPos || isRunning) return;
 
-    const startTime = performance.now();
     setIsRunning(true);
     clearPath();
 
@@ -163,7 +162,6 @@ const PathfindingVisualizer = () => {
       console.log('Pathfinding result:', result); // Debug log
 
       if (result.success) {
-        const endTime = performance.now();
         setStatistics({
           pathLength: result.path.length,
           nodesVisited: result.visitedNodes.length,
