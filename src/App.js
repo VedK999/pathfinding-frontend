@@ -3,11 +3,12 @@ import { Play, Square, Target, MapPin, RotateCcw, Zap } from 'lucide-react';
 import './App.css';
 
 const PathfindingVisualizer = () => {
-  const GRID_SIZE = 15;
+  //const GRID_SIZE = 15;
   const [grid, setGrid] = useState([]);
   const [startPos, setStartPos] = useState(null);
   const [endPos, setEndPos] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [gridSize, setGridSize] = useState(20)
   const [drawMode, setDrawMode] = useState('wall'); // 'wall', 'start', 'end'
   const [algorithm, setAlgorithm] = useState('dijkstra');
   const [isRunning, setIsRunning] = useState(false);
@@ -21,9 +22,9 @@ const PathfindingVisualizer = () => {
   // Initialize grid
   useEffect(() => {
     const newGrid = [];
-    for (let row = 0; row < GRID_SIZE; row++) {
+    for (let row = 0; row < gridSize; row++) {
       const currentRow = [];
-      for (let col = 0; col < GRID_SIZE; col++) {
+      for (let col = 0; col < gridSize; col++) {
         currentRow.push({
           row,
           col,
@@ -39,7 +40,9 @@ const PathfindingVisualizer = () => {
       newGrid.push(currentRow);
     }
     setGrid(newGrid);
-  }, []);
+    setStartPos(null);
+    setEndPos(null);
+  }, [gridSize]);
 
   const getCellType = (node) => {
     if (node.isStart) return 'start';
@@ -154,7 +157,7 @@ const PathfindingVisualizer = () => {
           start: startPos,
           end: endPos,
           algorithm: algorithm,
-          gridSize: GRID_SIZE,
+          gridSize: gridSize,
         }),
       });
 
@@ -225,6 +228,21 @@ const PathfindingVisualizer = () => {
                 <option value="dijkstra">Dijkstra's Algorithm</option>
                 <option value="astar">A* Algorithm</option>
                 <option value="bfs">Breadth-First Search</option>
+              </select>
+            </div>
+
+            <div className="control-group">
+              <label>Grid Size:</label>
+              <select
+                value={gridSize}
+                onChange={(e) => setGridSize(parseInt(e.target.value))}
+                disabled={isRunning}
+              >
+                <option value={15}>15x15 (Small)</option>
+                <option value={20}>20x20 (Medium)</option>
+                <option value={25}>25x25 (Default)</option>
+                <option value={30}>30x30 (Large)</option>
+                <option value={40}>40x40 (Extra Large)</option>
               </select>
             </div>
 
@@ -342,6 +360,7 @@ const PathfindingVisualizer = () => {
         <div className="grid-container">
           <div 
             className="grid"
+            data-size={gridSize}
             onMouseLeave={() => setIsDrawing(false)}
           >
             {grid.map((row, rowIdx) => (

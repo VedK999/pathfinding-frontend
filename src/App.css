@@ -71,6 +71,45 @@
   gap: 0.5rem;
 }
 
+/* Replace the grid-cell width/height with responsive sizes */
+.grid-cell {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #ccc;
+  /* ... other existing styles */
+}
+
+/* Add responsive sizes based on grid size */
+.grid[data-size="15"] .grid-cell {
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+}
+
+.grid[data-size="20"] .grid-cell {
+  width: 26px;
+  height: 26px;
+  font-size: 13px;
+}
+
+.grid[data-size="25"] .grid-cell {
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+}
+
+.grid[data-size="30"] .grid-cell {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+}
+
+.grid[data-size="40"] .grid-cell {
+  width: 15px;
+  height: 15px;
+  font-size: 8px;
+}
+
 .mode-btn {
   display: flex;
   align-items: center;
@@ -369,6 +408,15 @@
   .mode-btn {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid[data-size="30"] .grid-cell,
+  .grid[data-size="40"] .grid-cell {
+    width: 12px;
+    height: 12px;
+    font-size: 6px;
   }
 }
 
